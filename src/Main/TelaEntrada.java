@@ -5,6 +5,8 @@
  */
 package Main;
 
+import java.util.ArrayList;
+import java.util.Random;
 import javax.swing.JComboBox;
 
 /**
@@ -202,9 +204,31 @@ public class TelaEntrada extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        //gerar entrada randomica ...
+        Random gen = new Random();
+        ArrayList<int[]> entradas = new ArrayList<>();
+        int[] a = {2, 3, 1, 4, 5, 6, 8, 7, 0};
+        entradas.add(a);
+        int[] b = {3, 0, 1, 4, 2, 5, 8, 6, 7};
+        entradas.add(b);
+        int[] c = {8, 1, 3, 0, 6, 5, 4, 2, 7};
+        entradas.add(c);
+        int[] d = {5, 6, 2, 8, 0, 1, 4, 3, 7};
+        entradas.add(d);
+        
+        int[] en = entradas.get(gen.nextInt(entradas.size()));
+        
+        tf1.setText((en[0] == 0) ? "" : Integer.toString(en[0]));
+        tf2.setText((en[1] == 0) ? "" : Integer.toString(en[1]));
+        tf3.setText((en[2] == 0) ? "" : Integer.toString(en[2]));
+        tf4.setText((en[3] == 0) ? "" : Integer.toString(en[3]));
+        tf5.setText((en[4] == 0) ? "" : Integer.toString(en[4]));
+        tf6.setText((en[5] == 0) ? "" : Integer.toString(en[5]));
+        tf7.setText((en[6] == 0) ? "" : Integer.toString(en[6]));
+        tf8.setText((en[7] == 0) ? "" : Integer.toString(en[7]));
+        tf9.setText((en[8] == 0) ? "" : Integer.toString(en[8]));
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    
     /**
      * @param args the command line arguments
      */
