@@ -3,34 +3,41 @@ package Buscas;
 
 import java.util.ArrayList;
 
-public class BuscaProfundidade {
+public class BuscaLargura {
     
-    Pilha fronteira;
+    Fila fronteira;
     
-    public BuscaProfundidade(){
-        this.fronteira = new Pilha();
+    public BuscaLargura(){
+        this.fronteira = new Fila();
     }
     
     public Solucao buscar(int[] tabInicial, int maxProfundidade){
         
-        int qNos = 1; //ja conta o estado inicial
-        Estado eInicial = new Estado(tabInicial, 1, null);
-        fronteira.push(eInicial);
+        Estado estInicial = new Estado(tabInicial, 1, null);
+        int qNos = 0;
         
-        while(!this.fronteira.isEmpty()){
+        for(int i = 1; i <= maxProfundidade; i++){
             
-            System.out.println("fronteira: "+this.fronteira.size());
+            if(i == 1){
+                fronteira.add(estInicial);
+            }else{
+                int tamFronteira = fronteira.size();
+                for(int j = 0; j < tamFronteira; j++){
+                    Estado e = fronteira.getAndRemove();
+                    e.expandirNo();
+                    fronteira.add(e.filhos);
+                }   
+            }
             
-            Estado e = this.fronteira.pop();
-            if(this.isSolution(e.tabuleiro)){
-                System.out.println("*********************** Encontrou a solução *******************");
-                this.printTabuleiro(e.tabuleiro);
-                return this.construirSolucao(e, qNos, e.nivel);
-            }else if(e.nivel != maxProfundidade){
-                e.expandirNo();
-                qNos += e.filhos.size();
-                for(int i = e.filhos.size()-1; i >= 0; i--){
-                    this.fronteira.push(e.filhos.get(i));
+            System.out.println("Nível: "+i+" - fronteira: "+fronteira.size());
+            qNos += fronteira.size();
+            
+            for(int k = 0; k < fronteira.size(); k++){
+                Estado e = fronteira.get(k);
+                if(this.isSolution(e.tabuleiro)){
+                    System.out.println("*********************** Encontrou a solução *******************");
+                    this.printTabuleiro(e.tabuleiro);
+                    return this.construirSolucao(e, qNos, i);
                 }
             }
         }
