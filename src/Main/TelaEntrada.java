@@ -206,14 +206,12 @@ public class TelaEntrada extends javax.swing.JFrame {
         // TODO add your handling code here:
         Random gen = new Random();
         ArrayList<int[]> entradas = new ArrayList<>();
-        int[] a = {2, 3, 1, 4, 5, 6, 8, 7, 0};
+        int[] a = {1,2,3,7,4,6,0,5,8};
         entradas.add(a);
-        int[] b = {3, 0, 1, 4, 2, 5, 8, 6, 7};
+        int[] b = {0,2,3,1,4,5,7,8,6};
         entradas.add(b);
-        int[] c = {8, 1, 3, 0, 6, 5, 4, 2, 7};
+        int[] c = {1,2,3,4,6,0,7,5,8};
         entradas.add(c);
-        int[] d = {5, 6, 2, 8, 0, 1, 4, 3, 7};
-        entradas.add(d);
         
         int[] en = entradas.get(gen.nextInt(entradas.size()));
         

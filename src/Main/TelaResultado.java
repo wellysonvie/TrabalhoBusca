@@ -1,30 +1,41 @@
 
 package Main;
 
+import Buscas.Solucao;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 
 public class TelaResultado extends javax.swing.JFrame {
     
-    private ArrayList<int[]> solucao;
+    private ArrayList<int[]> passos;
     private int passo;
+    Solucao s = null;
 
     public TelaResultado(int[] entrada, String tipoBusca) {
         initComponents();
-        this.setTitle("Resultado - Passo 1");
+        this.setTitle("Resultado - Estado inicial");
         this.passo = 0;
         
         if(tipoBusca.equals("Profundidade")){
-            this.solucao = Solucionador.profundidade(entrada);
+            s = Solucionador.profundidade(entrada);
+            this.passos = s.solucao;
         }else if(tipoBusca.equals("Largura")){
-            this.solucao = Solucionador.largura(entrada);
+            s = Solucionador.largura(entrada);
+            this.passos = s.solucao;
         }else if(tipoBusca.equals("Gulosa")){
-            this.solucao = Solucionador.gulosa(entrada);
+            s = Solucionador.gulosa(entrada);
+            this.passos = s.solucao;
         }else if(tipoBusca.equals("A*")){
-            this.solucao = Solucionador.aEstrela(entrada);
+            s = Solucionador.aEstrela(entrada);
+            this.passos = s.solucao;
         }
-        exibir(this.solucao.get(0));
+        
+        System.out.println("Nível da solução: "+s.qNiveis);
+        System.out.println("Quantidade de nós gerados: "+s.qNos);
+        System.out.println("Tempo de execução: "+s.tempo+" ms");
+        
+        exibir(this.passos.get(0));
     }
     
     public void exibir(int[] estado){
@@ -182,12 +193,14 @@ public class TelaResultado extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        if((this.solucao.size()-1) != passo){
+        if((this.passos.size()-1) != passo){
             this.passo++;
-            exibir(this.solucao.get(passo));
+            exibir(this.passos.get(passo));
             this.setTitle("Resultado - Passo "+this.passo);
         }else{
-            JOptionPane.showMessageDialog(this, "ESTADO FINAL!");
+            JOptionPane.showMessageDialog(this, "Nível da solução: "+s.qNiveis+"\n"+
+                                                "Quantidade de nós gerados: "+s.qNos+"\n"+
+                                                "Tempo de execução: "+s.tempo+" ms", "Resumo da busca", 1);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -195,53 +208,18 @@ public class TelaResultado extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(this.passo != 0){
             this.passo--;
-            exibir(this.solucao.get(this.passo));
+            exibir(this.passos.get(this.passo));
             this.setTitle("Resultado - Passo "+this.passo);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        exibir(this.solucao.get(this.solucao.size()-1));
-        this.passo = this.solucao.size()-1;
+        exibir(this.passos.get(this.passos.size()-1));
+        this.passo = this.passos.size()-1;
         this.setTitle("Resultado - Passo "+this.passo);
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaResultado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaResultado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaResultado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaResultado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new TelaResultado().setVisible(true);
-            }
-        });*/
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
